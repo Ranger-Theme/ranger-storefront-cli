@@ -1,5 +1,6 @@
 *.yaml
 *.md
+*.hbs
 dist
 package-lock.json
 node_modules

@@ -13,52 +13,50 @@ type PkgType = {
   version?: string
 }
 
-const pkg: PkgType = JSON.parse(
-  fs.readFileSync(
-    path.join(__dirname, '../package.json'),
-    'utf-8'
-  )
-)
+const readPkg = (): PkgType => {
+  const pkgPath: string = path.join(__dirname, '../package.json')
+  const pkg: PkgType = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+  return pkg
+}
 
-program
-  .name(pkg.name)
-  .description(pkg?.description ?? '')
-  .usage('<command> [option]')
-  .version(pkg?.version ?? '0.1.0')
+const configCommand = () => {
+  const pkg: PkgType = readPkg()
+  const pkgName: string = pkg.name
+  const pkgVersion: string = pkg?.version ?? '0.1.0'
+  const pkgDescription: string = pkg?.description ?? ''
 
-program
-  .command('create <project-name>')
-  .description('Create a new project')
-  .option(
-    '-f, --force',
-    'Overwrite target directory if it exists'
-  )
-  .action((name: string, cmd) => {
-    console.log(name, cmd)
+  program.name(pkgName).description(pkgDescription).usage('<command> [option]').version(pkgVersion)
+
+  program
+    .command('create <project-name>')
+    .description('Create a new project')
+    .option('-f, --force', 'Overwrite target directory if it exists')
+    .alias('c')
+    .action((name: string, cmd) => {
+      console.log(name, cmd)
+    })
+
+  program.on('--help', () => {
+    console.log()
+    console.log(
+      `Run ${chalk.cyan('ranger-cli <command> --help')} for detailed usage of given command.
+      `
+    )
+    console.log(
+      '\r\n' +
+        figlet.textSync('ranger-cli', {
+          horizontalLayout: 'default',
+          verticalLayout: 'default',
+          width: 100,
+          whitespaceBreak: true
+        })
+    )
   })
 
-program.on('--help', () => {
-  console.log()
-  console.log(
-    `Run ${chalk.cyan(
-      'ranger-cli <command> --help'
-    )} for detailed usage of given command.
-    `
-  )
-  console.log(
-    '\r\n' +
-      figlet.textSync('ranger-cli', {
-        horizontalLayout: 'default',
-        verticalLayout: 'default',
-        width: 100,
-        whitespaceBreak: true
-      })
-  )
-})
+  program.parse(process.argv)
+}
 
-program.parse(process.argv)
-
-const runTask =  async () => {
+const runTask = async () => {
   const question: QuestionCollection[] = [
     {
       type: 'input',
@@ -98,7 +96,7 @@ const runTask =  async () => {
         {
           name: 'Using App Router',
           value: 'app',
-          short: 'Features available in /app',
+          short: 'Features available in /app'
         },
         {
           name: 'Using Pages Router',
@@ -115,12 +113,14 @@ const runTask =  async () => {
         {
           name: 'Using Material UI',
           value: '@mui/material',
-          short: 'Material UI is an open-source React component library that implements Google\'s Material Design.'
+          short:
+            "Material UI is an open-source React component library that implements Google's Material Design."
         },
         {
           name: 'Using Ant Design',
           value: 'antd',
-          short: 'Following the Ant Design specification, we developed a React UI library antd that contains a set of high quality components and demos for building rich, interactive user interfaces.'
+          short:
+            'Following the Ant Design specification, we developed a React UI library antd that contains a set of high quality components and demos for building rich, interactive user interfaces.'
         }
       ]
     },
@@ -132,12 +132,14 @@ const runTask =  async () => {
         {
           name: 'Using Emotion',
           value: '@emotion/react',
-          short: 'Emotion is a performant and flexible CSS-in-JS library, it allows you to style apps quickly with string or object styles.'
+          short:
+            'Emotion is a performant and flexible CSS-in-JS library, it allows you to style apps quickly with string or object styles.'
         },
         {
           name: 'Using Styled Components',
           value: 'styled-components',
-          short: 'Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress'
+          short:
+            'Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress'
         }
       ]
     },
@@ -149,7 +151,7 @@ const runTask =  async () => {
         {
           name: 'TypeScript',
           value: 'typescript',
-          checked: true,
+          checked: true
         },
         {
           name: 'Nextjs Middleware',
@@ -177,36 +179,40 @@ const runTask =  async () => {
         {
           name: 'npm',
           value: 'npm',
-          short: 'npm is the most popular package manager',
+          short: 'npm is the most popular package manager'
         },
         {
           name: 'yarn',
           value: 'yarn',
-          short: 'yarn is an awesome package manager',
+          short: 'yarn is an awesome package manager'
         },
         {
           name: 'cnpm',
           value: 'cnpm',
-          short: 'cnpm is quick install speed manager',
+          short: 'cnpm is quick install speed manager'
         },
         {
           name: 'pnpm',
           value: 'pnpm',
-          short: 'pnpm is most used package manager',
-        },
-      ],
+          short: 'pnpm is most used package manager'
+        }
+      ]
     },
     {
       name: 'install',
       type: 'confirm',
-      message: 'Do you want to install dependencies now?',
+      message: 'Do you want to install dependencies now?'
     }
   ]
-  
+
   await inquirer.prompt(question).then((data) => {
     console.log(data)
   })
 }
 
+const initTask = async () => {
+  await configCommand()
+  await runTask()
+}
 
-runTask()
+initTask()

@@ -7,6 +7,8 @@ import inquirer from 'inquirer'
 import { program } from 'commander'
 import type { QuestionCollection } from 'inquirer'
 
+import { create } from './create'
+
 type PkgType = {
   name: string
   description?: string
@@ -17,43 +19,6 @@ const readPkg = (): PkgType => {
   const pkgPath: string = path.join(__dirname, '../package.json')
   const pkg: PkgType = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
   return pkg
-}
-
-const configCommand = () => {
-  const pkg: PkgType = readPkg()
-  const pkgName: string = pkg.name
-  const pkgVersion: string = pkg?.version ?? '0.1.0'
-  const pkgDescription: string = pkg?.description ?? ''
-
-  program.name(pkgName).description(pkgDescription).usage('<command> [option]').version(pkgVersion)
-
-  program
-    .command('create <project-name>')
-    .description('Create a new project')
-    .option('-f, --force', 'Overwrite target directory if it exists')
-    .alias('c')
-    .action((name: string, cmd) => {
-      console.log(name, cmd)
-    })
-
-  program.on('--help', () => {
-    console.log()
-    console.log(
-      `Run ${chalk.cyan('ranger-cli <command> --help')} for detailed usage of given command.
-      `
-    )
-    console.log(
-      '\r\n' +
-        figlet.textSync('ranger-cli', {
-          horizontalLayout: 'default',
-          verticalLayout: 'default',
-          width: 100,
-          whitespaceBreak: true
-        })
-    )
-  })
-
-  program.parse(process.argv)
 }
 
 const runTask = async () => {
@@ -172,6 +137,33 @@ const runTask = async () => {
       ]
     },
     {
+      name: 'linter',
+      type: 'checkbox',
+      message: 'Check the rules linter needed for your project:',
+      choices: [
+        {
+          name: 'Eslint',
+          value: 'eslint'
+        },
+        {
+          name: 'Stylelint',
+          value: 'stylelint'
+        },
+        {
+          name: 'Commitlint',
+          value: 'commitlint'
+        },
+        {
+          name: 'Prettier',
+          value: 'prettierrc'
+        },
+        {
+          name: 'Lint Stage + Husky',
+          value: 'pwa'
+        }
+      ]
+    },
+    {
       name: 'package',
       type: 'list',
       message: 'Select a package manager',
@@ -210,9 +202,49 @@ const runTask = async () => {
   })
 }
 
-const initTask = async () => {
-  await configCommand()
-  await runTask()
+const initTask = () => {
+  const pkg: PkgType = readPkg()
+  const pkgName: string = pkg.name
+  const pkgVersion: string = pkg?.version ?? '0.1.0'
+  const pkgDescription: string = pkg?.description ?? ''
+
+  program.name(pkgName).description(pkgDescription).usage('<command> [option]').version(pkgVersion)
+
+  program
+    .command('create <project-name>')
+    .description('Create a new project')
+    .option('-f, --force', 'Overwrite target directory if it exists')
+    .alias('c')
+    .action((name: string, options: any) => {
+      runTask()
+      create(name, options).catch((err) => {
+        console.error(err)
+        process.exit(1)
+      })
+    })
+
+  program.on('--help', () => {
+    console.log()
+    console.log(
+      `Run ${chalk.cyan('ranger-cli <command> --help')} for detailed usage of given command.
+      `
+    )
+    console.log(
+      '\r\n' +
+        figlet.textSync('ranger-cli', {
+          horizontalLayout: 'default',
+          verticalLayout: 'default',
+          width: 100,
+          whitespaceBreak: true
+        })
+    )
+  })
+
+  program.parse(process.argv)
+
+  if (program.args && program.args.length < 1) {
+    program.outputHelp()
+  }
 }
 
 initTask()

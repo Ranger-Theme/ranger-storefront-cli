@@ -1,43 +1,35 @@
 import readline from 'node:readline'
 import chalk from 'chalk'
 
-// const dim = {
-//   error: "❌",
-//   warn: "⚠️",
-// }
+export const logInfo = (info: string, dim?: string) => {
+  if (!info) return
 
-export const logInfos = (infos: string[] | undefined, dim?: string) => {
-  if (!infos) return
-
-  infos.forEach((msg: string) => {
-    const str = dim ? chalk.cyan.dim(dim, msg) : chalk.cyan(msg)
-    console.log(str)
-  })
+  const str = dim ? chalk.cyan.dim(dim, info) : chalk.cyan(info)
+  console.log(str)
+  return str
 }
 
-export const logWarnings = (warnings: string[] | undefined, dim?: string) => {
-  if (!warnings) return
+export const logWarning = (warning: string, dim?: string) => {
+  if (!warning) return
 
-  warnings.forEach((msg) => {
-    const str = dim ? chalk.yellow.dim(dim, msg) : chalk.yellow(msg)
-    console.warn(str)
-  })
+  const str = dim ? chalk.yellow.dim(dim, warning) : chalk.yellow(warning)
+  console.warn(str)
+  return str
 }
 
-export const logErrors = (errors: string[] | undefined, dim?: string) => {
-  if (!errors) return
+export const logError = (error: string, dim?: string) => {
+  if (!error) return
 
-  errors.forEach((msg) => {
-    const str = dim ? chalk.red.dim(dim, msg) : chalk.red(msg)
-    console.error(str)
-  })
+  const str = dim ? chalk.red.dim(dim, error) : chalk.red(error)
+  console.error(str)
+  return str
 }
 
-export const clearConsole = (msg: string | undefined) => {
-  const blank = '\n'.repeat(process.stdout.rows)
+export const clearConsole = (msg?: string | undefined) => {
+  const blank: string = '\n'.repeat(process.stdout.rows)
   console.log(blank)
 
   readline.cursorTo(process.stdout, 0, 0)
   readline.clearScreenDown(process.stdout)
-  if (msg) logInfos([msg])
+  if (msg) logInfo(msg)
 }

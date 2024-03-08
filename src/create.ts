@@ -4,7 +4,8 @@ import chalk from 'chalk'
 import inquirer from 'inquirer'
 import validateNpmPackageName from 'validate-npm-package-name'
 
-import { logError, logInfo, logWarning, clearConsole } from './logger'
+import { cloneProject } from './clone'
+import { logError, logInfo, logWarning, clearConsole } from './utils'
 
 type Options = {
   [key: string]: string
@@ -25,19 +26,17 @@ const handleInvalidName = (result: any, name: string) => {
 
 const createInExistTargetDir = async (targetDir: string, options?: any): Promise<boolean> => {
   const { force, inCurrent } = options
-  // 强制创建
+
   if (force && !inCurrent) {
-    await fs.remove(targetDir) //清除当前文件和文件夹
+    await fs.remove(targetDir)
     return true
   }
 
-  // 在当前文件夹下创建
   clearConsole()
   if (inCurrent) {
     return createInCurrentDir()
   }
 
-  // 不是在当前文件夹下创建
   return createInSubDir(targetDir)
 }
 
@@ -78,26 +77,24 @@ const createInSubDir = async (targetDir: string): Promise<boolean> => {
 }
 
 export const create = async (projectName: string, options?: Options) => {
-  const cwd = options?.cwd || process.cwd() // process.cwd(): 返回是当前执行node命令时候的文件夹地址
-  const inCurrent = projectName === '.' // 如果项目名称为 '.' 表示要在当前目录下直接创建项目
+  const cwd = options?.cwd || process.cwd()
+  const inCurrent = projectName === '.'
   const name = inCurrent ? path.relative('../', projectName) : projectName
-  const targetDir = path.resolve(cwd, projectName) // 获取创建项目的地址
-  const result = validateNpmPackageName(name) // 检查项目名称是否符合npm 包的命名规范
+  const targetDir = path.resolve(cwd, projectName)
+  const result = validateNpmPackageName(name)
 
-  // 不符合npm 包的命名规范
   if (!result.validForNewPackages) {
     return handleInvalidName(result, name)
   }
 
-  // 当要存在和要创建的项目相同的文件夹时
   if (fs.existsSync(targetDir)) {
     const isCreate = await createInExistTargetDir(targetDir, {
       ...options,
       inCurrent
     })
 
-    if (!isCreate) return
+    if (!isCreate) return false
   }
 
-  console.log(`Creating project: ${name}`)
+  return cloneProject(name, targetDir)
 }

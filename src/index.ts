@@ -8,6 +8,7 @@ import { program } from 'commander'
 import type { QuestionCollection } from 'inquirer'
 
 import { create } from './create'
+import { list } from './options'
 
 const readPkg = (): PkgType => {
   const pkgPath: string = path.join(__dirname, '../package.json')
@@ -239,9 +240,15 @@ const initTask = () => {
     )
   })
 
+  list(program)
+
   program.parse(process.argv)
 
-  if (program.args && program.args.length < 1) {
+  if (
+    Object.getOwnPropertyNames(program.opts()).length === 0 &&
+    program.args &&
+    program.args.length < 1
+  ) {
     program.outputHelp()
   }
 }

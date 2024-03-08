@@ -13,7 +13,6 @@ const getPackageJson = (name: string) => {
 }
 
 const startLogger = (name: string, targetDir: string) => {
-  // clearConsole();
   logInfo(`Creating project: ${name} in ${targetDir}`)
 }
 

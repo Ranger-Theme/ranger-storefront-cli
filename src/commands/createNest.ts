@@ -1,9 +1,9 @@
 import type { Command } from 'commander'
 
-export const createVite = (program: Command) => {
+export const createNest = (program: Command) => {
   program
-    .command('create-vite [project-name]')
-    .description('Create a react project by vite')
+    .command('create-nest [project-name]')
+    .description('Create a nestjs node project.')
     .option('-t, --template <template-name>', 'Please enter template name.')
     .action(async (projectName = 'my-app', options) => {})
 }

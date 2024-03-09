@@ -7,6 +7,7 @@ import inquirer from 'inquirer'
 import { program } from 'commander'
 import type { QuestionCollection } from 'inquirer'
 
+import { createNest, createNext, createUmi, createVite, createWebpack } from './commands'
 import { create } from './create'
 import { list } from './options'
 
@@ -224,6 +225,16 @@ const initTask = () => {
         })
       })
     })
+
+  createNest(program)
+
+  createNext(program)
+
+  createUmi(program)
+
+  createVite(program)
+
+  createWebpack(program)
 
   list(program)
 

@@ -1,3 +1,5 @@
+import chalk from 'chalk'
+
 import { getFilesFormDir, writeFiles } from './file'
 
 const loadTemplates = async (templateName: string) => {
@@ -17,4 +19,6 @@ const getFilesAndPkg = async (options: Options) => {
 export const createTemplate = async (targetDir: string, options: Options) => {
   const { files } = await getFilesAndPkg(options)
   await writeFiles(targetDir, files)
+  console.log()
+  console.log(chalk.green(`Template created successfully in ${targetDir}`))
 }

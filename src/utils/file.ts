@@ -6,6 +6,8 @@ import { execa } from 'execa'
 import { globby } from 'globby'
 import { execSync } from 'node:child_process'
 
+import { logInfo } from './logger'
+
 export const deleteFiles = (dir: string, files: any, preFiles: any): Promise<any> => {
   const filesToDelete = Object.keys(preFiles)
     .filter((filename: any) => !files[filename])
@@ -23,6 +25,7 @@ export const writeFiles = async (dir: string, files: any, preFiles?: any): Promi
     const filePath = path.resolve(dir, name)
     await fs.ensureDir(path.dirname(filePath))
     await fs.writeFile(filePath, files[name])
+    await logInfo(`-- info: ${name}`)
   })
 
   return Promise.all(streams)

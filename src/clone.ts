@@ -37,7 +37,6 @@ const installDependencies = (targetDir: string): Promise<string> => {
   const args = ['install']
 
   return new Promise((resolve, reject) => {
-    console.log(1111)
     const child = execa(command, args, {
       cwd: targetDir,
       stdio: ['inherit', 'inherit', 'inherit']

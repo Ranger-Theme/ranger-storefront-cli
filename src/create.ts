@@ -76,7 +76,7 @@ const createInSubDir = async (targetDir: string): Promise<boolean> => {
   return true
 }
 
-export const create = async (projectName: string, options?: Options) => {
+export const create = async (projectName: string, options?: Options, params: any) => {
   const cwd = options?.cwd || process.cwd()
   const inCurrent = projectName === '.'
   const name = inCurrent ? path.relative('../', projectName) : projectName
@@ -92,9 +92,8 @@ export const create = async (projectName: string, options?: Options) => {
       ...options,
       inCurrent
     })
-
     if (!isCreate) return false
   }
 
-  return cloneProject(name, targetDir)
+  return cloneProject(name, targetDir, params)
 }

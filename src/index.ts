@@ -19,17 +19,17 @@ const readPkg = (): PkgType => {
 
 const runTask = async (): Promise<void> => {
   const question: QuestionCollection[] = [
-    {
-      type: 'input',
-      name: 'name',
-      message: 'What is your name?',
-      validate: (value: string) => {
-        if (value.length === 0) {
-          return 'Please enter your name'
-        }
-        return true
-      }
-    }
+    // {
+    //   type: 'input',
+    //   name: 'name',
+    //   message: 'What is your name?',
+    //   validate: (value: string) => {
+    //     if (value.length === 0) {
+    //       return 'Please enter your name.'
+    //     }
+    //     return true
+    //   }
+    // },
     // {
     //   name: 'email',
     //   type: 'input',
@@ -49,61 +49,61 @@ const runTask = async (): Promise<void> => {
     //   type: 'input',
     //   message: 'What is your description?'
     // },
-    // {
-    //   name: 'type',
-    //   type: 'list',
-    //   message: 'Please choose the type of your project?',
-    //   choices: [
-    //     {
-    //       name: 'Using App Router',
-    //       value: 'app',
-    //       short: 'Features available in /app'
-    //     },
-    //     {
-    //       name: 'Using Pages Router',
-    //       value: 'pages',
-    //       short: 'Features available in /pages'
-    //     }
-    //   ]
-    // },
-    // {
-    //   name: 'ui',
-    //   type: 'list',
-    //   message: 'Please choose the UI framework of your project?',
-    //   choices: [
-    //     {
-    //       name: 'Using Material UI',
-    //       value: '@mui/material',
-    //       short:
-    //         "Material UI is an open-source React component library that implements Google's Material Design."
-    //     },
-    //     {
-    //       name: 'Using Ant Design',
-    //       value: 'antd',
-    //       short:
-    //         'Following the Ant Design specification, we developed a React UI library antd that contains a set of high quality components and demos for building rich, interactive user interfaces.'
-    //     }
-    //   ]
-    // },
-    // {
-    //   name: 'styled',
-    //   type: 'list',
-    //   message: 'Please choose the CSS-in-JS library of your project?',
-    //   choices: [
-    //     {
-    //       name: 'Using Emotion',
-    //       value: '@emotion/react',
-    //       short:
-    //         'Emotion is a performant and flexible CSS-in-JS library, it allows you to style apps quickly with string or object styles.'
-    //     },
-    //     {
-    //       name: 'Using Styled Components',
-    //       value: 'styled-components',
-    //       short:
-    //         'Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress'
-    //     }
-    //   ]
-    // },
+    {
+      name: 'type',
+      type: 'list',
+      message: 'Please choose the type of your project?',
+      choices: [
+        {
+          name: 'Using App Router',
+          value: 'app',
+          short: 'Features available in /app'
+        },
+        {
+          name: 'Using Pages Router',
+          value: 'pages',
+          short: 'Features available in /pages'
+        }
+      ]
+    },
+    {
+      name: 'ui',
+      type: 'list',
+      message: 'Please choose the UI framework of your project?',
+      choices: [
+        {
+          name: 'Using Material UI',
+          value: 'mui',
+          short:
+            "Material UI is an open-source React component library that implements Google's Material Design."
+        },
+        {
+          name: 'Using Ant Design',
+          value: 'antd',
+          short:
+            'Following the Ant Design specification, we developed a React UI library antd that contains a set of high quality components and demos for building rich, interactive user interfaces.'
+        }
+      ]
+    },
+    {
+      name: 'styled',
+      type: 'list',
+      message: 'Please choose the CSS-in-JS library of your project?',
+      choices: [
+        {
+          name: 'Using Emotion',
+          value: 'emotion',
+          short:
+            'Emotion is a performant and flexible CSS-in-JS library, it allows you to style apps quickly with string or object styles.'
+        },
+        {
+          name: 'Using Styled Components',
+          value: 'styled',
+          short:
+            'Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress'
+        }
+      ]
+    },
     // {
     //   name: 'features',
     //   type: 'checkbox',
@@ -186,11 +186,16 @@ const runTask = async (): Promise<void> => {
     //     }
     //   ]
     // },
-    // {
-    //   name: 'install',
-    //   type: 'confirm',
-    //   message: 'Do you want to install dependencies now?'
-    // }
+    {
+      name: 'git',
+      type: 'confirm',
+      message: 'Do you want to git init for this folder?'
+    },
+    {
+      name: 'install',
+      type: 'confirm',
+      message: 'Do you want to install dependencies now?'
+    }
   ]
 
   const data: any = await inquirer.prompt(question)
@@ -218,8 +223,7 @@ const initTask = () => {
     .alias('c')
     .action((name: string = 'my-app', options: any) => {
       runTask().then((params: any) => {
-        console.info(params)
-        create(name, options).catch((err) => {
+        create(name, options, params).catch((err) => {
           console.error(err)
           process.exit(1)
         })

@@ -21,10 +21,6 @@ const writePackageJson = async (pkg: any, targetDir: string) => {
   await writeFiles(targetDir, { 'package.json': values })
 }
 
-const getTemplateName = (): string => {
-  return 'nextjs-mui-emotion-app'
-}
-
 const initGitRepository = async (targetDir: string) => {
   if (hasGit()) {
     logInfo('Initializing the git repository...')
@@ -50,12 +46,17 @@ const installDependencies = (targetDir: string): Promise<string> => {
   })
 }
 
-export const cloneProject = async (name: string, targetDir: string) => {
+const getTemplateName = (params: CommandParams): string => {
+  const templateName: string = `nextjs-${params?.ui}-${params?.styled}-${params?.type}`
+  return templateName
+}
+
+export const cloneProject = async (name: string, targetDir: string, params: CommandParams) => {
   const pkg = getPackageJson(name)
-  const templateName: string = await getTemplateName()
+  const templateName: string = await getTemplateName(params)
   await startLogger(name, targetDir)
   await writePackageJson(pkg, targetDir)
-  // await initGitRepository(targetDir)
+  if (params.git) await initGitRepository(targetDir)
   await createTemplate(targetDir, { templateName })
-  await installDependencies(targetDir)
+  if (params.install) await installDependencies(targetDir)
 }

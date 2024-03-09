@@ -205,6 +205,8 @@ const initTask = () => {
   const pkgVersion: string = pkg?.version ?? '0.1.0'
   const pkgDescription: string = pkg?.description ?? ''
 
+  program.allowUnknownOption()
+
   program.name(pkgName).description(pkgDescription).usage('<command> [option]').version(pkgVersion)
 
   program
@@ -223,6 +225,8 @@ const initTask = () => {
       })
     })
 
+  list(program)
+
   program.on('--help', () => {
     console.log()
     console.log(
@@ -240,17 +244,15 @@ const initTask = () => {
     )
   })
 
-  list(program)
-
-  program.parse(process.argv)
-
   if (
+    process.argv.length < 3 &&
     Object.getOwnPropertyNames(program.opts()).length === 0 &&
     program.args &&
     program.args.length < 1
   ) {
     program.outputHelp()
   }
+  program.parse(process.argv)
 }
 
 initTask()

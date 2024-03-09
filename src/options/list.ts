@@ -32,6 +32,8 @@ export const list = (program: Command) => {
         if (options.args.length > 0) {
           logError(`无效的命令: ${JSON.stringify(command)}`)
           logError('使用 --help 查看可用命令。\n')
+          const availableCommands = program.commands.map((cmd) => cmd.name())
+          console.log('可用命令：' + availableCommands.join(','))
           process.exit(1)
         }
       }

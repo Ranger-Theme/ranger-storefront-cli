@@ -14,7 +14,7 @@ export const createNext = (program: Command) => {
       const questions: QuestionCollection[] = [...general, ...nextjs, ...dependency]
 
       runTask(questions).then((params: any) => {
-        create(projectName, options, params).catch((err) => {
+        create(projectName, params, options).catch((err) => {
           console.error(err)
           process.exit(1)
         })

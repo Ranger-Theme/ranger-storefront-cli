@@ -76,7 +76,7 @@ const createInSubDir = async (targetDir: string): Promise<boolean> => {
   return true
 }
 
-export const create = async (projectName: string, options?: Options, params: any) => {
+export const create = async (projectName: string, params: CommandParams, options?: Options) => {
   const cwd = options?.cwd || process.cwd()
   const inCurrent = projectName === '.'
   const name = inCurrent ? path.relative('../', projectName) : projectName

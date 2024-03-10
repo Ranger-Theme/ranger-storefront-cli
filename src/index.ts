@@ -5,7 +5,14 @@ import chalk from 'chalk'
 import figlet from 'figlet'
 import { program } from 'commander'
 
-import { createNest, createNext, createUmi, createVite, createWebpack } from './commands'
+import {
+  createNest,
+  createNext,
+  createTemplate,
+  createUmi,
+  createVite,
+  createWebpack
+} from './commands'
 import { list } from './options'
 
 const readPkg = (): PkgType => {
@@ -24,24 +31,11 @@ const initTask = () => {
 
   program.name(pkgName).description(pkgDescription).usage('<command> [option]').version(pkgVersion)
 
-  // program
-  //   .command('create [project-name]')
-  //   .description('Create a new project')
-  //   .option('-t, --template <template-name>', 'Please enter template name.')
-  //   .option('-f, --force', 'Overwrite target directory if it exists')
-  //   .alias('c')
-  //   .action((name: string = 'my-app', options: any) => {
-  //     runTask().then((params: any) => {
-  //       create(name, options, params).catch((err) => {
-  //         console.error(err)
-  //         process.exit(1)
-  //       })
-  //     })
-  //   })
-
   createNest(program)
 
   createNext(program)
+
+  createTemplate(program)
 
   createUmi(program)
 

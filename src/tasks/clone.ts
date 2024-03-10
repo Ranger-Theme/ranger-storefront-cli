@@ -1,6 +1,6 @@
 import { execa } from 'execa'
 
-import { createTemplate, hasGit, runCommand, writeFiles, logInfo } from './utils'
+import { createTemplate, hasGit, runCommand, writeFiles, logInfo } from '../utils'
 
 const getPackageJson = (name: string) => {
   return {

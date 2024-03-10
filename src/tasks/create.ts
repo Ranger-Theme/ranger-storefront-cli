@@ -5,7 +5,7 @@ import inquirer from 'inquirer'
 import validateNpmPackageName from 'validate-npm-package-name'
 
 import { cloneProject } from './clone'
-import { logError, logInfo, logWarning, clearConsole } from './utils'
+import { logError, logInfo, logWarning, clearConsole } from '../utils'
 
 type Options = {
   [key: string]: string

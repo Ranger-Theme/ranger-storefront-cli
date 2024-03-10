@@ -1,5 +1,5 @@
 {
-  "name": "@ranger/cli",
+  "name": "@ranger-theme/cli",
   "version": "0.1.0",
   "description": "Ranger cli quick start program utilities",
   "type": "module",

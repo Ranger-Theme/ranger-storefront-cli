@@ -1,6 +1,6 @@
 {
   "name": "@ranger-theme/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ranger cli quick start program utilities",
   "type": "module",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
     "ranger-cli": "dist/index.js"
   },
   "files": [
-    "templates-*",
+    "templates/*",
     "dist"
   ],
   "scripts": {

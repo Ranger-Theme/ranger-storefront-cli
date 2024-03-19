@@ -6,5 +6,5 @@ export const createNest = (program: Command) => {
     .description('Create a nestjs node project.')
     .option('-t, --template <template-name>', 'Please enter template name.')
     .option('-f, --force', 'Overwrite target directory if it exists')
-    .action(async (projectName = 'my-app', options) => {})
+    .action(async (projectName = 'my-nestjs-app', options) => {})
 }

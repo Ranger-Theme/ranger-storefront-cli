@@ -55,7 +55,7 @@ export const renderFile = async (filePath: string): Promise<any> => {
 
 export const getFilesFormDir = async (dir: string) => {
   const promises = []
-  const cwd = path.resolve(process.cwd(), 'templates', dir)
+  const cwd = path.resolve(__dirname, '../templates', dir)
   const files = await globby(['**/*'], { cwd, dot: true })
 
   for (let i = 0, len = files.length; i < len; i += 1) {

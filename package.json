@@ -1,6 +1,6 @@
 {
   "name": "@ranger-theme/cli",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "Ranger cli quick start program utilities",
   "type": "module",
   "main": "dist/index.js",
@@ -11,8 +11,9 @@
     "ranger-cli": "dist/index.js"
   },
   "files": [
+    "dist",
     "templates/*",
-    "dist"
+    "README.md"
   ],
   "scripts": {
     "dev": "tsup --watch",

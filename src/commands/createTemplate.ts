@@ -10,7 +10,7 @@ export const createTemplate = (program: Command) => {
     .description('Create a frontend project.')
     .option('-t, --template <template-name>', 'Please enter template name.')
     .option('-f, --force', 'Overwrite target directory if it exists')
-    .action(async (projectName = 'my-nextjs-app', options) => {
+    .action(async (projectName = 'my-app', options) => {
       const questions: QuestionCollection[] = [...general, ...nextjs, ...dependency]
 
       runTask(questions).then((params: any) => {

@@ -19,6 +19,6 @@ const getFilesAndPkg = async (options: Options) => {
 export const createTemplate = async (targetDir: string, options: Options) => {
   const { files } = await getFilesAndPkg(options)
   await writeFiles(targetDir, files)
-  console.log()
-  console.log(chalk.green(`Template created successfully in ${targetDir}`))
+  await console.log()
+  await console.log(chalk.green(`Template created successfully in ${targetDir}`))
 }

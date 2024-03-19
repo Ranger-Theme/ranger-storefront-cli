@@ -28,8 +28,7 @@ const initGitRepository = async (targetDir: string) => {
   }
 }
 
-const installDependencies = (targetDir: string): Promise<string> => {
-  const command = 'pnpm'
+const installDependencies = (targetDir: string, command: string): Promise<string> => {
   const args = ['install']
 
   return new Promise((resolve, reject) => {
@@ -47,8 +46,12 @@ const installDependencies = (targetDir: string): Promise<string> => {
 }
 
 const getTemplateName = (params: CommandParams): string => {
-  const templateName: string = `nextjs-${params?.ui}-${params?.styled}-${params?.type}`
-  return templateName
+  try {
+    const templateName: string = `${params.platform}-${params?.ui}-${params?.styled}-${params?.type}`
+    return templateName
+  } catch (error) {
+    throw new Error('Command is not valid.')
+  }
 }
 
 export const cloneProject = async (name: string, targetDir: string, params: CommandParams) => {
@@ -58,5 +61,5 @@ export const cloneProject = async (name: string, targetDir: string, params: Comm
   await writePackageJson(pkg, targetDir)
   if (params.git) await initGitRepository(targetDir)
   await createTemplate(targetDir, { templateName })
-  if (params.install) await installDependencies(targetDir)
+  if (params.install) await installDependencies(targetDir, params.package)
 }

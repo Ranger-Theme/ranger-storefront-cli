@@ -13,7 +13,11 @@ export const createVite = (program: Command) => {
     .action(async (projectName = 'my-vite-app', options) => {
       const questions: QuestionCollection[] = [...general, ...vite, ...dependency]
 
-      runTask(questions).then((params: any) => {
+      runTask(questions).then((values: any) => {
+        const params: CommandParams = {
+          ...values,
+          platform: 'vite'
+        }
         create(projectName, params, options).catch((err) => {
           console.error(err)
           process.exit(1)

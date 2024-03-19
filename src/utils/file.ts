@@ -25,7 +25,13 @@ export const writeFiles = async (dir: string, files: any, preFiles?: any): Promi
     const filePath = path.resolve(dir, name)
     await fs.ensureDir(path.dirname(filePath))
     await fs.writeFile(filePath, files[name])
-    await logInfo(`-- info: ${name}`)
+    await fs.stat(filePath, (err, stats) => {
+      if (err) {
+        console.error(err)
+      } else {
+        logInfo(`-- info: ${name} (${(stats.size / 1024).toFixed(2)}kb)`)
+      }
+    })
   })
 
   return Promise.all(streams)
@@ -38,15 +44,19 @@ export const renderFile = async (filePath: string): Promise<any> => {
   }
 
   const content = await fs.readFile(filePath, 'utf-8')
-  const template = handlebars.compile(content)
-  const result = template({})
-  return result
+  if (filePath.indexOf('package.json') > -1) {
+    const template = handlebars.compile(content)
+    const result = template({})
+    return result
+  } else {
+    return content
+  }
 }
 
 export const getFilesFormDir = async (dir: string) => {
   const promises = []
   const cwd = path.resolve(process.cwd(), 'templates', dir)
-  const files = await globby(['**/*'], { cwd })
+  const files = await globby(['**/*'], { cwd, dot: true })
 
   for (let i = 0, len = files.length; i < len; i += 1) {
     const file = files[i]

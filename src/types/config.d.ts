@@ -4,6 +4,8 @@ type PkgType = {
   version?: string
 }
 
+type PlatFormType = 'nextjs' | 'vite' | 'umi' | 'webpack' | 'nestjs'
+
 type Options = {
   templateName: string
 }
@@ -11,6 +13,8 @@ type Options = {
 type CommandParams = {
   install: boolean
   git: boolean
+  platform: PlatFormType
+  package: string
   type?: string
   ui?: string
   styled?: string

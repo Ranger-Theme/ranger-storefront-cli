@@ -13,7 +13,11 @@ export const createNext = (program: Command) => {
     .action(async (projectName = 'my-nextjs-app', options) => {
       const questions: QuestionCollection[] = [...general, ...nextjs, ...dependency]
 
-      runTask(questions).then((params: any) => {
+      runTask(questions).then((values: any) => {
+        const params: CommandParams = {
+          ...values,
+          platform: 'nextjs'
+        }
         create(projectName, params, options).catch((err) => {
           console.error(err)
           process.exit(1)

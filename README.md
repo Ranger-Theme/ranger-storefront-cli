@@ -8,76 +8,97 @@
 With NPM:
 
 ```bash
-$ npm create vite@latest
+$ npm install @ranger-theme/cli -g
 ```
 
 With Yarn:
 
 ```bash
-$ yarn create vite
+$ yarn install @ranger-theme/cli -g
 ```
 
 With PNPM:
 
 ```bash
-$ pnpm create vite
-```
-
-With Bun:
-
-```bash
-$ bun create vite
+$ pnpm add @ranger-theme/cli -g
 ```
 
 Then follow the prompts!
 
-You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
+You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite / Next.js project, run:
 
 ```bash
-# npm 7+, extra double-dash is needed:
-npm create vite@latest my-vue-app -- --template vue
+# create nextjs project
+ranger-cli create-next my-nextjs-app
 
-# yarn
-yarn create vite my-vue-app --template vue
+# create vite project
+ranger-cli create-vite my-vite-app
 
-# pnpm
-pnpm create vite my-vue-app --template vue
+# pnpm vite project
+ranger-cli create-nest my-nextjs-app
 
-# Bun
-bun create vite my-vue-app --template vue
 ```
 
 Currently supported template presets include:
 
-- `vanilla`
-- `vanilla-ts`
-- `vue`
-- `vue-ts`
-- `react`
-- `react-ts`
-- `react-swc`
-- `react-swc-ts`
-- `preact`
-- `preact-ts`
-- `lit`
-- `lit-ts`
-- `svelte`
-- `svelte-ts`
-- `solid`
-- `solid-ts`
-- `qwik`
-- `qwik-ts`
+- `nextjs-antd-emotion-app`
+- `nextjs-antd-emotion-pages`
+- `nextjs-antd-styled-app`
+- `nextjs-antd-styled-pages`
+- `nextjs-mui-emotion-app`
+- `nextjs-mui-emotion-pages` (supported in v0.1.0)
+- `nextjs-mui-styled-app`
+- `nextjs-mui-styled-pages`
+- `vite-antd-emotion-http` (supported in v0.1.0)
+- `vite-antd-styled-http`
+- `vite-mui-emotion-http`
+- `vite-mui-styled-http`
 
 You can use `.` for the project name to scaffold in the current directory.
 
-## Community Templates
+# Conifg Npm Privte Org
 
-create-vite is a tool to quickly start a project from a basic template for popular frameworks. Check out Awesome Vite for [community maintained templates](https://github.com/vitejs/awesome-vite#templates) that include other tools or target different frameworks. You can use a tool like [degit](https://github.com/Rich-Harris/degit) to scaffold your project with one of the templates.
+## Look up npm global config
+```bash
+# 查看npmrc
+cat ~/.npmrc 
+```
+
+## Install @ranger-theme/cli globally
+```bash
+pnpm add @ranger-theme/cli -g
+```
+
+## Create project by cli
+```bash
+# 使用命令
+ranger-cli
+```
 
 ```bash
-npx degit user/project my-project
-cd my-project
+Usage: @ranger/cli <command> [option]
 
-npm install
-npm run dev
+Ocloud cli quick start program utilities
+
+Options:
+  -V, --version                            output the version number
+  -l, --list                               Show all currently available templates.
+  -h, --help                               display help for command
+
+Commands:
+  create-nest [options] [project-name]     Create a nestjs node project.
+  create-next [options] [project-name]     Create a nextjs project.
+  create [options] [project-name]          Create a frontend project.
+  create-umi [options] [project-name]      Create a react project by umi.
+  create-vite [options] [project-name]     Create a react project by vite.
+  create-webpack [options] [project-name]  Create a react project by webpack.
+
+Run ranger-cli <command> --help for detailed usage of given command.
+      
+
+             _                 _            _ _ 
+   ___   ___| | ___  _   _  __| |       ___| (_)
+  / _ \ / __| |/ _ \| | | |/ _` |_____ / __| | |
+ | (_) | (__| | (_) | |_| | (_| |_____| (__| | |
+  \___/ \___|_|\___/ \__,_|\__,_|      \___|_|_|
 ```

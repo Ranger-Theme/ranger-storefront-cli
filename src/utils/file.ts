@@ -1,5 +1,6 @@
 import path from 'node:path'
 import fs from 'fs-extra'
+import gracefulFs from 'graceful-fs'
 import handlebars from 'handlebars'
 import isBinaryPath from 'is-binary-path'
 import { execa } from 'execa'
@@ -7,6 +8,8 @@ import { globby } from 'globby'
 import { execSync } from 'node:child_process'
 
 import { logInfo } from './logger'
+
+gracefulFs.gracefulify(fs)
 
 export const deleteFiles = (dir: string, files: any, preFiles: any): Promise<any> => {
   const filesToDelete = Object.keys(preFiles)
@@ -24,7 +27,7 @@ export const writeFiles = async (dir: string, files: any, preFiles?: any): Promi
   const streams = Object.keys(files).map(async (name: any) => {
     const filePath = path.resolve(dir, name)
     await fs.ensureDir(path.dirname(filePath))
-    await fs.writeFile(filePath, files[name])
+    await fs.writeFileSync(filePath, files[name])
     await fs.stat(filePath, (err, stats) => {
       if (err) {
         console.error(err)
@@ -39,11 +42,11 @@ export const writeFiles = async (dir: string, files: any, preFiles?: any): Promi
 
 export const renderFile = async (filePath: string): Promise<any> => {
   if (isBinaryPath(filePath)) {
-    const data = await fs.readFile(filePath)
+    const data = await fs.readFileSync(filePath)
     return data
   }
 
-  const content = await fs.readFile(filePath, 'utf-8')
+  const content = await fs.readFileSync(filePath, 'utf-8')
   if (filePath.indexOf('package.json') > -1) {
     const template = handlebars.compile(content)
     const result = template({})

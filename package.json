@@ -8,7 +8,8 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "bin": {
-    "ranger-cli": "dist/index.js"
+    "ranger-cli": "dist/index.js",
+    "create-ranger-app": "dist/index.js"
   },
   "files": [
     "dist",
@@ -30,6 +31,7 @@
     "figlet": "^1.7.0",
     "fs-extra": "^11.2.0",
     "globby": "^14.0.1",
+    "graceful-fs": "^4.2.11",
     "handlebars": "^4.7.8",
     "inquirer": "^9.2.15",
     "is-binary-path": "^2.1.0",
@@ -40,6 +42,7 @@
   "devDependencies": {
     "@types/figlet": "^1.5.8",
     "@types/fs-extra": "^11.0.4",
+    "@types/graceful-fs": "^4.1.9",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^20.11.24",
     "@types/validate-npm-package-name": "^4.0.2",

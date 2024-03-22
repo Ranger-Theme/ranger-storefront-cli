@@ -26,6 +26,9 @@ dependencies:
   globby:
     specifier: ^14.0.1
     version: 14.0.1
+  graceful-fs:
+    specifier: ^4.2.11
+    version: 4.2.11
   handlebars:
     specifier: ^4.7.8
     version: 4.7.8
@@ -52,6 +55,9 @@ devDependencies:
   '@types/fs-extra':
     specifier: ^11.0.4
     version: 11.0.4
+  '@types/graceful-fs':
+    specifier: ^4.1.9
+    version: 4.1.9
   '@types/inquirer':
     specifier: ^9.0.7
     version: 9.0.7
@@ -550,6 +556,12 @@ packages:
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
     dependencies:
       '@types/jsonfile': 6.1.4
+      '@types/node': 20.11.24
+    dev: true
+
+  /@types/graceful-fs@4.1.9:
+    resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
+    dependencies:
       '@types/node': 20.11.24
     dev: true
 

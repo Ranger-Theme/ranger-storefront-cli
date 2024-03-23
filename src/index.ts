@@ -25,7 +25,7 @@ const bootstrap = async () => {
   program
     .name(pkgName)
     .description(pkgDescription)
-    .usage('<command> [option]')
+    .usage('<command>')
     .version(pkgVersion)
     .option('-d, --debug', '开启调试模式', false)
     .option('-e, --envName <envName>', '获取环境变量名称')

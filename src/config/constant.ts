@@ -1,5 +1,33 @@
 export const schematics: Schematic[] = [
   {
+    name: 'api',
+    alias: 'ai',
+    description: 'Generate a api for app'
+  },
+  {
+    name: 'component',
+    alias: 'cp',
+    description: 'Generate a react component'
+  },
+  {
+    name: 'hooks',
+    alias: 'ho',
+    description: 'Generate a hooks declaration'
+  },
+  {
+    name: 'provider',
+    alias: 'pr',
+    description: 'Generate a provider declaration'
+  },
+  {
+    name: 'utils',
+    alias: 'ut',
+    description: 'Generate a util declaration'
+  }
+]
+
+export const nestSchematics: Schematic[] = [
+  {
     name: 'application',
     alias: 'application',
     description: 'Generate a new application workspace'

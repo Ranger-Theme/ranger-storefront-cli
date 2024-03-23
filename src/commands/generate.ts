@@ -1,7 +1,9 @@
 import type { Command } from 'commander'
 
 import { schematics } from '../config'
-import { logListAsTable } from '../utils'
+import { react } from '../prompt'
+import { generateTask, runTask } from '../tasks'
+import { logError, logListAsTable } from '../utils'
 
 const buildDescription = async (collection: any[]): Promise<string> => {
   return (
@@ -20,6 +22,22 @@ export const generate = async (program: Command) => {
     .alias('g')
     .description(await buildDescription(schematics))
     .action(async (schematic: string, name: string, path: string, command: Command) => {
-      console.info(schematic)
+      const match: Schematic | undefined = schematics.find((item: Schematic) =>
+        [item.alias, item.name].includes(schematic)
+      )
+
+      if (match) {
+        if (name) {
+          await generateTask(match, name, path)
+        } else {
+          const question: any[] = [react[match.name]]
+          await runTask(question).then((values: any) => {
+            console.log(values)
+          })
+        }
+      } else {
+        logError(`无效的命令: ${JSON.stringify(command)}`)
+        logError('使用 ranger-cli g --help 查看可用命令。\n')
+      }
     })
 }

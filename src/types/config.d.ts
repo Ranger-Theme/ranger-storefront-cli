@@ -20,6 +20,12 @@ type CommandParams = {
   styled?: string
 }
 
+type Schematic = {
+  name: string
+  alias: string
+  description: string
+}
+
 interface CommandType {
   (program: Command): void
 }

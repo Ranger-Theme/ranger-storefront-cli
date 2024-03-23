@@ -1,1 +1,1 @@
-export { COMMANDS, TEMPLATES } from './constant'
+export { schematics, COMMANDS, TEMPLATES } from './constant'

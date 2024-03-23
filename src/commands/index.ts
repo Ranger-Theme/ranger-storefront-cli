@@ -9,6 +9,7 @@ import { createTemplate } from './createTemplate'
 import { createUmi } from './createUmi'
 import { createVite } from './createVite'
 import { createWebpack } from './createWebpack'
+import { generate } from './generate'
 
 export const createCommands = (program: Command) => {
   const commands: Array<CommandType> = [
@@ -20,7 +21,8 @@ export const createCommands = (program: Command) => {
     createTemplate,
     createUmi,
     createVite,
-    createWebpack
+    createWebpack,
+    generate
   ]
 
   commands.forEach((command) => {

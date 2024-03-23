@@ -19,3 +19,11 @@ type CommandParams = {
   ui?: string
   styled?: string
 }
+
+interface CommandType {
+  (program: Command): void
+}
+
+interface Templates {
+  [key: string]: string
+}

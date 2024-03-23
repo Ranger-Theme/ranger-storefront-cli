@@ -2,15 +2,10 @@ import chalk from 'chalk'
 import Table from 'cli-table3'
 import type { Command } from 'commander'
 
+import { TEMPLATES } from '../config'
 import { logError } from '../utils'
 
-const TEMPLATES: any = {
-  'next-app-router': 'A Next.js project using App Router.',
-  'next-page-router': 'A Next.js project using page router.',
-  'vite-react': 'A React project using vite.'
-}
-
-export const list = (program: Command) => {
+export const listOption = (program: Command) => {
   program
     .option('-l, --list', 'Show all currently available templates.')
     .action((command: any, options: Command) => {

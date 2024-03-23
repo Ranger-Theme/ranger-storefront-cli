@@ -5,15 +5,8 @@ import chalk from 'chalk'
 import figlet from 'figlet'
 import { program } from 'commander'
 
-import {
-  createNest,
-  createNext,
-  createTemplate,
-  createUmi,
-  createVite,
-  createWebpack
-} from './commands'
-import { list } from './options'
+import { createCommands } from './commands'
+import { createOptions } from './options'
 
 const readPkg = (): PkgType => {
   const pkgPath: string = path.join(__dirname, '../package.json')
@@ -21,8 +14,8 @@ const readPkg = (): PkgType => {
   return pkg
 }
 
-const initTask = () => {
-  const pkg: PkgType = readPkg()
+const bootstrap = async () => {
+  const pkg: PkgType = await readPkg()
   const pkgName: string = pkg.name
   const pkgVersion: string = pkg?.version ?? '0.1.0'
   const pkgDescription: string = pkg?.description ?? ''
@@ -31,19 +24,8 @@ const initTask = () => {
 
   program.name(pkgName).description(pkgDescription).usage('<command> [option]').version(pkgVersion)
 
-  createNest(program)
-
-  createNext(program)
-
-  createTemplate(program)
-
-  createUmi(program)
-
-  createVite(program)
-
-  createWebpack(program)
-
-  list(program)
+  await createCommands(program)
+  await createOptions(program)
 
   program.on('--help', () => {
     console.log()
@@ -62,15 +44,11 @@ const initTask = () => {
     )
   })
 
-  if (
-    process.argv.length < 3 &&
-    Object.getOwnPropertyNames(program.opts()).length === 0 &&
-    program.args &&
-    program.args.length < 1
-  ) {
+  if (!process.argv.slice(2).length) {
     program.outputHelp()
   }
-  program.parse(process.argv)
+
+  await program.parseAsync(process.argv)
 }
 
-initTask()
+bootstrap()

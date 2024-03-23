@@ -1,0 +1,1 @@
+export { TEMPLATES } from './constant'

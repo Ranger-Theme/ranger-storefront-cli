@@ -27,3 +27,5 @@ interface CommandType {
 interface Templates {
   [key: string]: string
 }
+
+interface Commands extends Templates {}

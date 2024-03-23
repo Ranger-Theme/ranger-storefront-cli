@@ -22,7 +22,13 @@ const bootstrap = async () => {
 
   program.allowUnknownOption()
 
-  program.name(pkgName).description(pkgDescription).usage('<command> [option]').version(pkgVersion)
+  program
+    .name(pkgName)
+    .description(pkgDescription)
+    .usage('<command> [option]')
+    .version(pkgVersion)
+    .option('-d, --debug', '开启调试模式', false)
+    .option('-e, --envName <envName>', '获取环境变量名称')
 
   await createCommands(program)
   await createOptions(program)
@@ -44,11 +50,12 @@ const bootstrap = async () => {
     )
   })
 
+  await program.parseAsync(process.argv)
+
   if (!process.argv.slice(2).length) {
     program.outputHelp()
+    process.exit()
   }
-
-  await program.parseAsync(process.argv)
 }
 
 bootstrap()

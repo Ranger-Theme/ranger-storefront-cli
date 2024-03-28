@@ -1,12 +1,12 @@
 export const schematics: Schematic[] = [
   {
     name: 'api',
-    alias: 'ai',
+    alias: 'ap',
     description: 'Generate a api for app'
   },
   {
     name: 'component',
-    alias: 'cp',
+    alias: 'co',
     description: 'Generate a react component'
   },
   {

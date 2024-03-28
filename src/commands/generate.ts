@@ -7,7 +7,7 @@ import { logError, logListAsTable } from '../utils'
 
 const buildDescription = async (collection: any[]): Promise<string> => {
   return (
-    'Generate a Nest element.\n' +
+    'Generate a React element.\n' +
     `  Schematics available on collection:\n` +
     logListAsTable(collection)
   )
@@ -28,11 +28,12 @@ export const generate = async (program: Command) => {
 
       if (match) {
         if (name) {
-          await generateTask(match, name, path)
+          generateTask(match, name, path)
         } else {
           const question: any[] = [react[match.name]]
           await runTask(question).then((values: any) => {
             console.log(values)
+            // generateTask(match, name, path)
           })
         }
       } else {

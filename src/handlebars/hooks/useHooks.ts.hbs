@@ -1,0 +1,14 @@
+import { useState } from 'react'
+
+export const use{{componentName}} = () => {
+  const [visible, setVisble] = useState<boolean>(false)
+
+  const handleOnClick = () => {
+    setVisble(!visible)
+  }
+
+  return {
+    visible,
+    handleOnClick
+  }
+}

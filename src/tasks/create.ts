@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import inquirer from 'inquirer'
 import validateNpmPackageName from 'validate-npm-package-name'
 
-import { cloneProject } from './clone'
+import { cloneTemplate } from './clone'
 import { logError, logInfo, logWarning, clearConsole } from '../utils'
 
 type Options = {
@@ -95,5 +95,5 @@ export const create = async (projectName: string, params: CommandParams, options
     if (!isCreate) return false
   }
 
-  return cloneProject(name, targetDir, params)
+  return cloneTemplate(name, targetDir, params)
 }

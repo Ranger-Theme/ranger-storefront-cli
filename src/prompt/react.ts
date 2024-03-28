@@ -1,5 +1,8 @@
 import type { QuestionCollection } from 'inquirer'
 
+// 中划线命名法(kebab-case) /^[a-z]{1}[a-z-]+[a-z]$
+// 大驼峰命名法(CamelCase) /^[A-Z]{1}[a-zA-Z]*?[a-z]$/
+// 小驼峰命名法(lowerCamelCase) /^[a-z]{1}[a-zA-Z]*?[a-z]$/
 export const react: {
   [key: string]: QuestionCollection
 } = {
@@ -30,8 +33,13 @@ export const react: {
     name: 'component',
     message: 'What is component name?',
     validate: (value: string) => {
+      const reg = /^[A-Z]{1}[a-zA-Z]*?[a-z]$/
       if (value.length === 0) {
-        return 'Please enter component name.'
+        return 'Please enter api name.'
+      }
+
+      if (!reg.test(value)) {
+        return 'Please enter a valid api name.'
       }
       return true
     }

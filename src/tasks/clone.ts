@@ -54,7 +54,7 @@ const getTemplateName = (params: CommandParams): string => {
   }
 }
 
-export const cloneProject = async (name: string, targetDir: string, params: CommandParams) => {
+export const cloneTemplate = async (name: string, targetDir: string, params: CommandParams) => {
   const pkg = getPackageJson(name)
   const templateName: string = await getTemplateName(params)
   await startLogger(name, targetDir)
